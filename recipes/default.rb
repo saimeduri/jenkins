@@ -26,19 +26,6 @@ yum_package 'jenkins' do
   action :install
 end
 
-group 'jenkins' do
-  action :create
-  gid '1234'
-  append true
-end
-
-user 'myjenkins' do
-  uid '1234'
-  gid '1234'
-  home '/home/jenkins'
-  shell '/bin/bash'
-end
-
 service 'jenkins' do
   supports status: true, restart: true, reload: true
   action [:enbale, :start]
