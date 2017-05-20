@@ -8,19 +8,24 @@ execute 'yum_update' do
   command 'yum -y update'
 end
 
+yum_package 'java-1.8.0-openjdk-devel.x86_64' do
+  action :install
+end
+
 yum_package 'wget' do
   action :install
 end
 
-remote_file '/etc/yum.repos.d/jenkins.repo' do
-  source 'http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo'
+execute 'wget_repo' do
+  command 'wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo'
 end
 
-yum_repository 'jenkins' do
-  description 'Install jenkins'
-  baseurl "https://pkg.jenkins.io/redhat-stable"
-  gpgkey 'https://pkg.jenkins.io/redhat-stable/jenkins.io.key'
-  action :create
+execute 'rpm_import' do
+  command 'rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key'
+end
+
+execute 'install_jenkins' do
+  command 'yum -y install jenkins'
 end
 
 yum_package 'jenkins' do
@@ -31,4 +36,3 @@ service 'jenkins' do
   supports status: true, restart: true, reload: true
   action [:enable, :start]
 end
-
