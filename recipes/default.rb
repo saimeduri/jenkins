@@ -18,7 +18,8 @@ end
 
 yum_repository 'jenkins' do
   description 'Install jenkins'
-  gpg key 'https://jenkins-ci.org/redhat/jenkins-ci.org.key'
+  baseurl "https://pkg.jenkins.io/redhat-stable"
+  gpgkey 'https://pkg.jenkins.io/redhat-stable/jenkins.io.key'
   action :create
 end
 
@@ -28,6 +29,6 @@ end
 
 service 'jenkins' do
   supports status: true, restart: true, reload: true
-  action [:enbale, :start]
+  action [:enable, :start]
 end
 
