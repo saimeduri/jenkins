@@ -1,4 +1,4 @@
-# jenkins
+# myjenkins
 
-TODO: Enter the cookbook description here.
+Chef cookbook to install jenkins
 
