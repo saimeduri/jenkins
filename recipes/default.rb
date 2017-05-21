@@ -37,6 +37,11 @@ template '/etc/profile' do
   mode '0755'
 end
 
+template '~/.bashrc do
+  source 'config.erb'
+  mode '0755'
+end
+
 service 'jenkins' do
   supports status: true, restart: true, reload: true
   action [:enable, :start]
