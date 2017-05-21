@@ -32,6 +32,11 @@ yum_package 'jenkins' do
   action :install
 end
 
+template '/etc/profile' do
+  source 'profile.erb'
+  mode '0755'
+end
+
 service 'jenkins' do
   supports status: true, restart: true, reload: true
   action [:enable, :start]
