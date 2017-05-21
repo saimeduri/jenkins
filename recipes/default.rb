@@ -32,6 +32,22 @@ yum_package 'jenkins' do
   action :install
 end
 
+directory '/opt/maven' do
+  owner 'jenkins'
+  group 'jenkins'
+  mode '0755'
+  action :create
+end
+
+execute 'wget_tar' do
+  command 'wget -O /opt/maven/apache-maven-3.5.0-bin.tar.gz http://mirrors.advancedhosters.com/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz'
+end
+
+execute 'extract_maven_tar' do
+  command 'tar xzvf apache-maven-3.5.0-bin.tar.gz'
+  cwd '/opt/maven'
+end
+
 template '/etc/profile' do
   source 'profile.erb'
   mode '0755'
